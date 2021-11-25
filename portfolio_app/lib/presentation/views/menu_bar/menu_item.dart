@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class MenuItem extends HookWidget {
   final Color color;
-  final bool hidden;
   final void Function(PointerEnterEvent) onEnter;
   final void Function(PointerExitEvent) onExit;
   final Widget child;
@@ -15,17 +14,12 @@ class MenuItem extends HookWidget {
     this.onEnter,
     this.onExit,
     this.child,
-    this.hidden = false,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: onEnter,
-      onExit: onExit,
-      child: Container(
-        color: color,
-        child: Center(child: child),
-      ),
+    return Container(
+      color: color,
+      child: Center(child: child),
     );
   }
 }
