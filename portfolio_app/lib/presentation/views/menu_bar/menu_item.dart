@@ -7,12 +7,14 @@ class MenuItem extends HookWidget {
   final bool hidden;
   final void Function(PointerEnterEvent) onEnter;
   final void Function(PointerExitEvent) onExit;
+  final Widget child;
 
   const MenuItem({
     Key key,
     @required this.color,
     this.onEnter,
     this.onExit,
+    this.child,
     this.hidden = false,
   }) : super(key: key);
   @override
@@ -22,6 +24,7 @@ class MenuItem extends HookWidget {
       onExit: onExit,
       child: Container(
         color: color,
+        child: Center(child: child),
       ),
     );
   }

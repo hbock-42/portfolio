@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'presentation/theme/app_theme.dart';
+import 'presentation/views/home/home.dart';
 
 class AppWidget extends StatelessWidget {
   @override
@@ -10,9 +11,10 @@ class AppWidget extends StatelessWidget {
       title: 'Hugo\'portfolio',
       home: Container(
         color: Colors.grey,
-        child: Home(),
+        child: Material(child: Home()),
       ),
       color: Colors.grey,
+      theme: AppTheme.themeData,
     );
   }
 }

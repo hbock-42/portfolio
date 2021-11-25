@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'animated_translation.dart';
+import '../core/widgets/animated_translation.dart';
 import 'menu_item.dart';
 
 class Menu extends StatelessWidget {
