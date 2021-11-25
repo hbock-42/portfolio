@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:portfolio_app/presentation/theme/app_theme.dart';
-import 'package:portfolio_app/resources/resources.dart';
 
+import '../../../resources/resources.dart';
+import '../../theme/app_theme.dart';
+import '../core/widgets/fitted_text.dart';
+import '../core/widgets/screen_sized_box.dart';
 import '../menu_bar/menu_bar.dart';
 import '../menu_bar/menu_item.dart';
 
@@ -14,34 +16,42 @@ class Home extends HookWidget {
     ValueNotifier<bool> hideMenu = useState(false);
     return Stack(
       children: <Widget>[
+        Stack(
+          children: <Widget>[
+            ScreenSizedBox(child: Container(color: Colors.red)),
+            ScreenSizedBox(child: Container(color: Colors.green)),
+            ScreenSizedBox(child: Container(color: Colors.blue)),
+            ScreenSizedBox(child: Container(color: Colors.yellow)),
+          ],
+        ),
         Menu(
           axis: isPortrait ? Axis.horizontal : Axis.vertical,
           hidden: hideMenu.value,
           menuItems: <MenuItem>[
             MenuItem(
               color: Colors.red,
-              child: Text(
+              child: FittedText(
                 'Who am I',
                 style: AppTheme.themeData.textTheme.headline1,
               ),
             ),
             MenuItem(
               color: Colors.green,
-              child: Text(
+              child: FittedText(
                 'Projects',
                 style: AppTheme.themeData.textTheme.headline1,
               ),
             ),
             MenuItem(
               color: Colors.blue,
-              child: Text(
+              child: FittedText(
                 'CV',
                 style: AppTheme.themeData.textTheme.headline1,
               ),
             ),
             MenuItem(
               color: Colors.yellow,
-              child: Text(
+              child: FittedText(
                 'Contact',
                 style: AppTheme.themeData.textTheme.headline1,
               ),
