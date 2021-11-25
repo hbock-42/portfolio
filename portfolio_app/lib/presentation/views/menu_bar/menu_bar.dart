@@ -2,10 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../core/widgets/animated_translation.dart';
+import 'helpers/menu_item_size.dart';
 import 'menu_item.dart';
 
 class Menu extends StatefulWidget {
-  static const double hideRatio = 3 / 5;
   final List<MenuItem> menuItems;
   final Axis axis;
   final bool hidden;
@@ -57,9 +57,11 @@ class _MenuState extends State<Menu> {
 
   List<Widget> _getMenuItems(BoxConstraints constraints) {
     List<Widget> positionedItems = <Widget>[];
-    double size = widget.axis == Axis.horizontal
-        ? constraints.maxWidth / widget.menuItems.length
-        : constraints.maxHeight / widget.menuItems.length;
+    double size = menuItemSize(
+        widget.axis,
+        Size(constraints.maxWidth, constraints.maxHeight),
+        widget.menuItems.length);
+
     double width = size;
     double height = size;
     int itemCount = widget.menuItems.length;
