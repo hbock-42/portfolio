@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:portfolio_app/presentation/theme/app_theme.dart';
+import 'package:portfolio_app/resources/resources.dart';
 
 import '../menu_bar/menu_bar.dart';
 import '../menu_bar/menu_item.dart';
@@ -47,9 +48,22 @@ class Home extends HookWidget {
             ),
           ],
         ),
-        ElevatedButton(
-          onPressed: () => hideMenu.value = !hideMenu.value,
-          child: Text(hideMenu.value ? 'show' : 'hide'),
+        Positioned(
+          width: 50,
+          height: 50,
+          top: 6,
+          left: 6,
+          child: IconButton(
+            hoverColor: Colors.transparent,
+            focusColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onPressed: () => hideMenu.value = !hideMenu.value,
+            icon: Image(
+              image: AssetImage(Images.menu),
+              color: Colors.white,
+            ),
+          ),
         ),
       ],
     );

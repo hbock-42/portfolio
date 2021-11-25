@@ -9,10 +9,7 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Hugo\'portfolio',
-      home: Container(
-        color: Colors.grey,
-        child: Material(child: Home()),
-      ),
+      home: Material(color: Colors.black45, child: Home()),
       color: Colors.grey,
       theme: AppTheme.themeData,
     );

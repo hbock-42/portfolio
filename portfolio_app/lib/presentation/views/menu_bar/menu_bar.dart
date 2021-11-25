@@ -23,6 +23,14 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   int _indexCurrentHovered;
+  void set indexCurrentHovered(int value) {
+    _indexCurrentHovered = value;
+    if (value != null) {
+      _indexLastHover = value;
+    }
+  }
+
+  int _indexLastHover;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +47,9 @@ class _MenuState extends State<Menu> {
         duration: Duration(milliseconds: 400),
         curve: Curves.easeOutCubic,
         child: Stack(
-          children: _getMenuItems(constraints),
+          children: <Widget>[
+            ..._getMenuItems(constraints),
+          ],
         ),
       );
     });
@@ -72,16 +82,16 @@ class _MenuState extends State<Menu> {
         child: _ElevatedReactiveButton(
           i: i,
           indexCurrentHovered: _indexCurrentHovered,
-          onEnter: (_) => setState(() => _indexCurrentHovered = i),
-          onExit: (_) => setState(() => _indexCurrentHovered = null),
+          onEnter: (_) => setState(() => indexCurrentHovered = i),
+          onExit: (_) => setState(() => indexCurrentHovered = null),
           child: widget.menuItems[i],
         ),
       );
       positionedItems.add(positionedItem);
     }
-    if (_indexCurrentHovered != null) {
-      Widget currentHovered = positionedItems[_indexCurrentHovered];
-      positionedItems.removeAt(_indexCurrentHovered);
+    if (_indexLastHover != null) {
+      Widget currentHovered = positionedItems[_indexLastHover];
+      positionedItems.removeAt(_indexLastHover);
       positionedItems.add(currentHovered);
     }
 
