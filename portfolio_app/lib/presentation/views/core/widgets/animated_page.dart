@@ -55,11 +55,6 @@ class _AnimatedPageState extends State<AnimatedPage>
   void initState() {
     _initializeValues();
 
-    print(_offsetInterval);
-    print(_sizeInterval);
-    print(_startSize);
-    print(_endSize);
-
     _controller = AnimationController(vsync: this, duration: _duration);
 
     _initializeOffsetAnimation();
