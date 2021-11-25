@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../core/widgets/animated_translation.dart';
@@ -22,16 +23,6 @@ class Menu extends StatefulWidget {
 
 class _MenuState extends State<Menu> {
   int _indexCurrentHovered;
-  final BoxDecoration _boxDecoration = BoxDecoration(
-    boxShadow: <BoxShadow>[
-      BoxShadow(
-        color: Colors.black.withOpacity(0.2),
-        offset: Offset(5.0, 5.0),
-        blurRadius: 10.0,
-        spreadRadius: 3.0,
-      ),
-    ],
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +57,6 @@ class _MenuState extends State<Menu> {
 
     for (int i = 0; i < itemCount; i++) {
       double intervalStart = 1.0 * i / itemCount;
-      // todo: refactor This big widget
       AnimatedPositioned positionedItem = AnimatedPositioned(
         key: ValueKey<int>(i),
         width: width,
@@ -79,20 +69,12 @@ class _MenuState extends State<Menu> {
           intervalStart + intervalLength,
           curve: Curves.easeInOut,
         ),
-        child: AnimatedTranslation(
-          offset: Offset(_indexCurrentHovered == i ? 10.0 : 0.0,
-              _indexCurrentHovered == i ? 10.0 : 0.0),
-          duration: Duration(milliseconds: 200),
-          curve: Curves.easeOutCubic,
-          child: MouseRegion(
-            onEnter: (_) => setState(() => _indexCurrentHovered = i),
-            onExit: (_) => setState(() => _indexCurrentHovered = null),
-            // todo: animate decoration transition
-            child: Container(
-              decoration: _indexCurrentHovered == i ? _boxDecoration : null,
-              child: widget.menuItems[i],
-            ),
-          ),
+        child: _ElevatedReactiveButton(
+          i: i,
+          indexCurrentHovered: _indexCurrentHovered,
+          onEnter: (_) => setState(() => _indexCurrentHovered = i),
+          onExit: (_) => setState(() => _indexCurrentHovered = null),
+          child: widget.menuItems[i],
         ),
       );
       positionedItems.add(positionedItem);
@@ -104,5 +86,51 @@ class _MenuState extends State<Menu> {
     }
 
     return positionedItems;
+  }
+}
+
+class _ElevatedReactiveButton extends StatelessWidget {
+  final int i;
+  final int indexCurrentHovered;
+  final Widget child;
+  final void Function(PointerEnterEvent) onEnter;
+  final void Function(PointerExitEvent) onExit;
+
+  const _ElevatedReactiveButton({
+    Key key,
+    @required this.i,
+    @required this.indexCurrentHovered,
+    this.child,
+    this.onEnter,
+    this.onExit,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedTranslation(
+      offset: Offset(indexCurrentHovered == i ? 10.0 : 0.0,
+          indexCurrentHovered == i ? 10.0 : 0.0),
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeOutCubic,
+      child: MouseRegion(
+        onEnter: onEnter,
+        onExit: onExit,
+        child: Container(
+          decoration: indexCurrentHovered == i
+              ? BoxDecoration(
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      offset: Offset(5.0, 5.0),
+                      blurRadius: 10.0,
+                      spreadRadius: 3.0,
+                    ),
+                  ],
+                )
+              : null,
+          child: child,
+        ),
+      ),
+    );
   }
 }
